@@ -2,7 +2,18 @@ import logging
 import psycopg2
 import sys
 
-logger = logging.getLogger(__name__)
+from src.app_logging import config_logger
+from src.common import CommonVariables
+
+logger = None
+
+
+def set_logger():
+    global logger
+    logger = logging.getLogger(__name__)
+    logger = config_logger(logger, CommonVariables.logfile)
+    print(CommonVariables.logfile)
+
 
 class MyCursor:
     def __init__(self, dbname, dbuser, dbpass, dbhost):
@@ -22,7 +33,7 @@ class MyCursor:
                 self.dbhost
             ))
         except:
-            logger.error("{}:: " + str(sys.exc_info()[1]))
+            logger.error(str(sys.exc_info()[1]))
             return False
         return True
 
@@ -33,7 +44,7 @@ class MyCursor:
             cursor.execute(query)
             response = cursor.fetchall()
         except:
-            logger.error("{}:: " + str(sys.exc_info()[1]))
+            logger.error(str(sys.exc_info()[1]))
             return False
 
         return response

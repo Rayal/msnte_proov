@@ -16,5 +16,5 @@ def get_config(config_file_name):
     if lines != {}:
         return lines
 
-    logger.error("{}:: Config file {} not found".format(time.time(), config_file_name))
+    logger.error("{} Config file {} not found".format(int(time.time()), config_file_name))
 
