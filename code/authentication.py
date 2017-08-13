@@ -24,8 +24,8 @@ class Auth(Resource):
                         help="This field cannot be left blank")
 
     @classmethod
-    def set_cursor(cls, dbname, username):
-        cls.cursor = queries.MyCursor(dbname, username)
+    def set_cursor(cls, dbname):
+        cls.cursor = queries.MyCursor(dbname)
 
     def post(self):
         request_data = Auth.parser.parse_args()

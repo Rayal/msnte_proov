@@ -1,0 +1,3 @@
+#object: path
+dbname:messente_proovikas
+logfile:log/logfile.log
