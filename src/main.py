@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 api = Api(app)
 
-app_config = config.get_config('config/config')
+app_config = config.get_config('/etc/messente/config/config')
 
 try:
     Auth.set_cursor(
