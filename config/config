@@ -1,3 +1,6 @@
 #object: path
-dbname:messente_proovikas
-logfile:log/logfile.log
+dbname: messente_proovikas
+dbuser: undo
+dbpass: asdf
+dbhost: localhost
+logfile: log/logfile.log

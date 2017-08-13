@@ -5,8 +5,8 @@ from logging.handlers import RotatingFileHandler
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 
-from authentication import Auth
-import config
+from src.authentication import Auth
+import src.config as config
 
 logger = logging.getLogger(__name__)
 #logging.basicConfig(filename="logged.log", level=logging.DEBUG)
@@ -17,11 +17,16 @@ api = Api(app)
 
 app_config = config.get_config('config/config')
 
-if 'dbname' in app_config:
-    Auth.set_cursor(app_config['dbname'])
-    logger.debug("{}:: Database name '{}' found in config file.".format(time.time(), app_config['dbname']))
-else:
-    logger.error("{}:: Database name not found in config file.".format(time.time()))
+try:
+    Auth.set_cursor(
+        app_config['dbname'],
+        app_config['dbuser'],
+        app_config['dbpass'],
+        app_config['dbhost']
+    )
+    logger.debug("{}:: Database credentials found in config file.".format(time.time()))
+except KeyError:
+    logger.error("{}:: Database credentials not found in config file.".format(time.time()))
     exit(-1)
 
 
