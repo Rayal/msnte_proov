@@ -10,17 +10,22 @@ from src.authentication import Auth
 from src.common import CommonVariables
 import src.config as config
 
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
+
 
 app = Flask(__name__)
 api = Api(app)
 
+
+# Getting app config from file
 app_config = config.get_config('/etc/messente/config/config')
 
+
+# Setting up logger so that it logs to the correct file
 if 'logfile' in app_config:
     CommonVariables.logfile = app_config['logfile']
-
 else:
     logger.warning("{}:: Log file address not found in config file. Resorting to default: {}".format(
         time.time(),
@@ -32,6 +37,8 @@ app.logger.addHandler(get_handler(CommonVariables.logfile))
 authentication.set_logger()
 queries.set_logger()
 
+
+# Setting up our database interface with the credentials from the config file.
 try:
     Auth.set_cursor(
         app_config['dbname'],
@@ -52,6 +59,6 @@ def hello_world():
 
 if __name__ == '__main__':
     app.logger.setLevel(logging.DEBUG)
-    api.add_resource(Auth, "/auth")
+    api.add_resource(Auth, "/auth") # http://localhost:5000/auth
 
     app.run()

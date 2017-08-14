@@ -3,6 +3,8 @@ import time
 
 logger = logging.getLogger(__name__)
 
+
+# Parses the config file to get the configuration.
 def get_config(config_file_name):
     lines = {}
     with open(config_file_name) as file_handle:
